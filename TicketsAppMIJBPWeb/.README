@@ -1,0 +1,271 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
+-- --------------------------------------------------
+-- Date Created: 10/18/2024 13:38:27
+-- Generated from EDMX file: C:\Users\Guillermo Nicolas MH\source\repos\sistemaMIJBPSln\CapaDato\ApplicationDbContext.edmx
+-- --------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF;
+GO
+USE [TicketsAppMIJBP];
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'NivelesLiderazgo'
+CREATE TABLE [dbo].[NivelesLiderazgo] (
+    [IdNivelLiderazgo] int IDENTITY(1,1) NOT NULL,
+    [NombreNivel] nvarchar(max)  NOT NULL,
+    [DescripcionNivel] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Personas'
+CREATE TABLE [dbo].[Personas] (
+    [IdPersona] int IDENTITY(1,1) NOT NULL,
+    [NombrePersona] nvarchar(max)  NOT NULL,
+    [Email] nvarchar(max)  NOT NULL,
+    [Telefono] nvarchar(max)  NOT NULL,
+    [NivelLiderazgoIdNivelLiderazgo] int  NOT NULL,
+    [RedIdRed] int  NOT NULL
+);
+GO
+
+-- Creating table 'Redes'
+CREATE TABLE [dbo].[Redes] (
+    [IdRed] int IDENTITY(1,1) NOT NULL,
+    [NombreRed] nvarchar(max)  NOT NULL,
+    [DescripcionRed] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Eventos'
+CREATE TABLE [dbo].[Eventos] (
+    [IdEvento] int IDENTITY(1,1) NOT NULL,
+    [NombreEvento] nvarchar(max)  NOT NULL,
+    [FechaEvento] datetime  NOT NULL,
+    [CantidadTotalTickets] int  NOT NULL,
+    [DescripcionEvento] nvarchar(max)  NOT NULL,
+    [EstadoEventoIdEstadoEvento] int  NOT NULL
+);
+GO
+
+-- Creating table 'EstadosEvento'
+CREATE TABLE [dbo].[EstadosEvento] (
+    [IdEstadoEvento] int IDENTITY(1,1) NOT NULL,
+    [NombreEstadoEvento] nvarchar(max)  NOT NULL,
+    [DescripcionEstadoEvento] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Tickets'
+CREATE TABLE [dbo].[Tickets] (
+    [IdTicket] int IDENTITY(1,1) NOT NULL,
+    [NumeroTicket] nvarchar(max)  NOT NULL,
+    [AbonoTicket] float  NULL,
+    [PrecioOriginal] float  NOT NULL,
+    [DescuentoAplicado] float  NULL,
+    [FechaDescuento] datetime  NULL,
+    [EventoIdEvento] int  NOT NULL,
+    [EstadoTicketIdEstadoTicket] int  NOT NULL,
+    [CategoriaTicketIdCategoriaTicket] int  NOT NULL,
+    [PersonaIdPersona] int  NOT NULL
+);
+GO
+
+-- Creating table 'EstadosTicket'
+CREATE TABLE [dbo].[EstadosTicket] (
+    [IdEstadoTicket] int IDENTITY(1,1) NOT NULL,
+    [NombreEstadoTicket] nvarchar(max)  NOT NULL,
+    [DescripcionEstadoTicket] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'CategoriasTicket'
+CREATE TABLE [dbo].[CategoriasTicket] (
+    [IdCategoriaTicket] int IDENTITY(1,1) NOT NULL,
+    [NombreCategoriaTicket] nvarchar(max)  NOT NULL,
+    [DescripcionCategoriaTicket] nvarchar(max)  NOT NULL,
+    [DescuentoAplicable] float  NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [IdNivelLiderazgo] in table 'NivelesLiderazgo'
+ALTER TABLE [dbo].[NivelesLiderazgo]
+ADD CONSTRAINT [PK_NivelesLiderazgo]
+    PRIMARY KEY CLUSTERED ([IdNivelLiderazgo] ASC);
+GO
+
+-- Creating primary key on [IdPersona] in table 'Personas'
+ALTER TABLE [dbo].[Personas]
+ADD CONSTRAINT [PK_Personas]
+    PRIMARY KEY CLUSTERED ([IdPersona] ASC);
+GO
+
+-- Creating primary key on [IdRed] in table 'Redes'
+ALTER TABLE [dbo].[Redes]
+ADD CONSTRAINT [PK_Redes]
+    PRIMARY KEY CLUSTERED ([IdRed] ASC);
+GO
+
+-- Creating primary key on [IdEvento] in table 'Eventos'
+ALTER TABLE [dbo].[Eventos]
+ADD CONSTRAINT [PK_Eventos]
+    PRIMARY KEY CLUSTERED ([IdEvento] ASC);
+GO
+
+-- Creating primary key on [IdEstadoEvento] in table 'EstadosEvento'
+ALTER TABLE [dbo].[EstadosEvento]
+ADD CONSTRAINT [PK_EstadosEvento]
+    PRIMARY KEY CLUSTERED ([IdEstadoEvento] ASC);
+GO
+
+-- Creating primary key on [IdTicket] in table 'Tickets'
+ALTER TABLE [dbo].[Tickets]
+ADD CONSTRAINT [PK_Tickets]
+    PRIMARY KEY CLUSTERED ([IdTicket] ASC);
+GO
+
+-- Creating primary key on [IdEstadoTicket] in table 'EstadosTicket'
+ALTER TABLE [dbo].[EstadosTicket]
+ADD CONSTRAINT [PK_EstadosTicket]
+    PRIMARY KEY CLUSTERED ([IdEstadoTicket] ASC);
+GO
+
+-- Creating primary key on [IdCategoriaTicket] in table 'CategoriasTicket'
+ALTER TABLE [dbo].[CategoriasTicket]
+ADD CONSTRAINT [PK_CategoriasTicket]
+    PRIMARY KEY CLUSTERED ([IdCategoriaTicket] ASC);
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [NivelLiderazgoIdNivelLiderazgo] in table 'Personas'
+ALTER TABLE [dbo].[Personas]
+ADD CONSTRAINT [FK_NivelLiderazgoPersona]
+    FOREIGN KEY ([NivelLiderazgoIdNivelLiderazgo])
+    REFERENCES [dbo].[NivelesLiderazgo]
+        ([IdNivelLiderazgo])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_NivelLiderazgoPersona'
+CREATE INDEX [IX_FK_NivelLiderazgoPersona]
+ON [dbo].[Personas]
+    ([NivelLiderazgoIdNivelLiderazgo]);
+GO
+
+-- Creating foreign key on [RedIdRed] in table 'Personas'
+ALTER TABLE [dbo].[Personas]
+ADD CONSTRAINT [FK_RedPersona]
+    FOREIGN KEY ([RedIdRed])
+    REFERENCES [dbo].[Redes]
+        ([IdRed])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RedPersona'
+CREATE INDEX [IX_FK_RedPersona]
+ON [dbo].[Personas]
+    ([RedIdRed]);
+GO
+
+-- Creating foreign key on [EstadoEventoIdEstadoEvento] in table 'Eventos'
+ALTER TABLE [dbo].[Eventos]
+ADD CONSTRAINT [FK_EstadoEventoEvento]
+    FOREIGN KEY ([EstadoEventoIdEstadoEvento])
+    REFERENCES [dbo].[EstadosEvento]
+        ([IdEstadoEvento])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EstadoEventoEvento'
+CREATE INDEX [IX_FK_EstadoEventoEvento]
+ON [dbo].[Eventos]
+    ([EstadoEventoIdEstadoEvento]);
+GO
+
+-- Creating foreign key on [EventoIdEvento] in table 'Tickets'
+ALTER TABLE [dbo].[Tickets]
+ADD CONSTRAINT [FK_EventoTicket]
+    FOREIGN KEY ([EventoIdEvento])
+    REFERENCES [dbo].[Eventos]
+        ([IdEvento])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EventoTicket'
+CREATE INDEX [IX_FK_EventoTicket]
+ON [dbo].[Tickets]
+    ([EventoIdEvento]);
+GO
+
+-- Creating foreign key on [EstadoTicketIdEstadoTicket] in table 'Tickets'
+ALTER TABLE [dbo].[Tickets]
+ADD CONSTRAINT [FK_EstadoTicketTicket]
+    FOREIGN KEY ([EstadoTicketIdEstadoTicket])
+    REFERENCES [dbo].[EstadosTicket]
+        ([IdEstadoTicket])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EstadoTicketTicket'
+CREATE INDEX [IX_FK_EstadoTicketTicket]
+ON [dbo].[Tickets]
+    ([EstadoTicketIdEstadoTicket]);
+GO
+
+-- Creating foreign key on [CategoriaTicketIdCategoriaTicket] in table 'Tickets'
+ALTER TABLE [dbo].[Tickets]
+ADD CONSTRAINT [FK_CategoriaTicketTicket]
+    FOREIGN KEY ([CategoriaTicketIdCategoriaTicket])
+    REFERENCES [dbo].[CategoriasTicket]
+        ([IdCategoriaTicket])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CategoriaTicketTicket'
+CREATE INDEX [IX_FK_CategoriaTicketTicket]
+ON [dbo].[Tickets]
+    ([CategoriaTicketIdCategoriaTicket]);
+GO
+
+-- Creating foreign key on [PersonaIdPersona] in table 'Tickets'
+ALTER TABLE [dbo].[Tickets]
+ADD CONSTRAINT [FK_PersonaTicket]
+    FOREIGN KEY ([PersonaIdPersona])
+    REFERENCES [dbo].[Personas]
+        ([IdPersona])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonaTicket'
+CREATE INDEX [IX_FK_PersonaTicket]
+ON [dbo].[Tickets]
+    ([PersonaIdPersona]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

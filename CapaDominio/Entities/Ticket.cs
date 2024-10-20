@@ -9,11 +9,12 @@ public partial class Ticket
 {
     [Key]
     public int IdTicket { get; set; }
-
-    public string NumeroTicket { get; set; } = null!;
+    [Required(ErrorMessage = "El número de ticket es requerido"), MinLength(3, ErrorMessage = "El nombre debe contener al menos 3 caracteres")]
+    public string NumeroTicket { get; set; }
 
     public double? AbonoTicket { get; set; }
 
+    [Required(ErrorMessage = "El precio es requerido")]
     public double PrecioOriginal { get; set; }
 
     public double? DescuentoAplicado { get; set; }

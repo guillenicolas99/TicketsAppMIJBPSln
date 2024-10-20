@@ -11,8 +11,10 @@ public partial class EstadosTicket
     [Key]
     public int IdEstadoTicket { get; set; }
 
+    [Required(ErrorMessage = "El nombre del estado de la ticket es requerida"), MinLength(3, ErrorMessage = "El nombre debe contener al menos 3 caracteres")]
     public string NombreEstadoTicket { get; set; } = null!;
 
+    [Required(ErrorMessage = "La descripción del estado es requerida"), MinLength(3, ErrorMessage = "La descripción debe contener al menos 3 caracteres")]
     public string DescripcionEstadoTicket { get; set; } = null!;
 
     [InverseProperty("EstadoTicketIdEstadoTicketNavigation")]

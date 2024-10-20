@@ -10,23 +10,22 @@ using CapaInfraestructura.Context;
 
 namespace TicketsAppMIJBPWeb.Controllers
 {
-    public class EventoController : Controller
+    public class NivelesLiderazgoesController : Controller
     {
         private readonly MiDbContext _context;
 
-        public EventoController(MiDbContext context)
+        public NivelesLiderazgoesController(MiDbContext context)
         {
             _context = context;
         }
 
-        // GET: Eventoes
+        // GET: NivelesLiderazgoes
         public async Task<IActionResult> Index()
         {
-            var miDbContext = _context.Eventos.Include(e => e.EstadoEventoIdEstadoEventoNavigation);
-            return View(await miDbContext.ToListAsync());
+            return View(await _context.NivelesLiderazgos.ToListAsync());
         }
 
-        // GET: Eventoes/Details/5
+        // GET: NivelesLiderazgoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace TicketsAppMIJBPWeb.Controllers
                 return NotFound();
             }
 
-            var evento = await _context.Eventos
-                .Include(e => e.EstadoEventoIdEstadoEventoNavigation)
-                .FirstOrDefaultAsync(m => m.IdEvento == id);
-            if (evento == null)
+            var nivelesLiderazgo = await _context.NivelesLiderazgos
+                .FirstOrDefaultAsync(m => m.IdNivelLiderazgo == id);
+            if (nivelesLiderazgo == null)
             {
                 return NotFound();
             }
 
-            return View(evento);
+            return View(nivelesLiderazgo);
         }
 
-        // GET: Eventoes/Create
+        // GET: NivelesLiderazgoes/Create
         public IActionResult Create()
         {
-            ViewData["EstadoEventoIdEstadoEvento"] = new SelectList(_context.EstadosEventos, "IdEstadoEvento", "NombreEstadoEvento");
             return View();
         }
 
-        // POST: Eventoes/Create
+        // POST: NivelesLiderazgoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEvento,NombreEvento,FechaEvento,CantidadTotalTickets,DescripcionEvento,EstadoEventoIdEstadoEvento")] Evento evento)
+        public async Task<IActionResult> Create([Bind("IdNivelLiderazgo,NombreNivel,DescripcionNivel")] NivelesLiderazgo nivelesLiderazgo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(evento);
+                _context.Add(nivelesLiderazgo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EstadoEventoIdEstadoEvento"] = new SelectList(_context.EstadosEventos, "IdEstadoEvento", "DescripcionEstadoEvento", evento.EstadoEventoIdEstadoEvento);
-            return View(evento);
+            return View(nivelesLiderazgo);
         }
 
-        // GET: Eventoes/Edit/5
+        // GET: NivelesLiderazgoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace TicketsAppMIJBPWeb.Controllers
                 return NotFound();
             }
 
-            var evento = await _context.Eventos.FindAsync(id);
-            if (evento == null)
+            var nivelesLiderazgo = await _context.NivelesLiderazgos.FindAsync(id);
+            if (nivelesLiderazgo == null)
             {
                 return NotFound();
             }
-            ViewData["NombreEstadoEvento"] = new SelectList(_context.EstadosEventos, "IdEstadoEvento", "NombreEstadoEvento", evento.EstadoEventoIdEstadoEvento);
-            return View(evento);
+            return View(nivelesLiderazgo);
         }
 
-        // POST: Eventoes/Edit/5
+        // POST: NivelesLiderazgoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEvento,NombreEvento,FechaEvento,CantidadTotalTickets,DescripcionEvento,EstadoEventoIdEstadoEvento")] Evento evento)
+        public async Task<IActionResult> Edit(int id, [Bind("IdNivelLiderazgo,NombreNivel,DescripcionNivel")] NivelesLiderazgo nivelesLiderazgo)
         {
-            if (id != evento.IdEvento)
+            if (id != nivelesLiderazgo.IdNivelLiderazgo)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace TicketsAppMIJBPWeb.Controllers
             {
                 try
                 {
-                    _context.Update(evento);
+                    _context.Update(nivelesLiderazgo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventoExists(evento.IdEvento))
+                    if (!NivelesLiderazgoExists(nivelesLiderazgo.IdNivelLiderazgo))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace TicketsAppMIJBPWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EstadoEventoIdEstadoEvento"] = new SelectList(_context.EstadosEventos, "IdEstadoEvento", "DescripcionEstadoEvento", evento.EstadoEventoIdEstadoEvento);
-            return View(evento);
+            return View(nivelesLiderazgo);
         }
 
-        // GET: Eventoes/Delete/5
+        // GET: NivelesLiderazgoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +124,34 @@ namespace TicketsAppMIJBPWeb.Controllers
                 return NotFound();
             }
 
-            var evento = await _context.Eventos
-                .Include(e => e.EstadoEventoIdEstadoEventoNavigation)
-                .FirstOrDefaultAsync(m => m.IdEvento == id);
-            if (evento == null)
+            var nivelesLiderazgo = await _context.NivelesLiderazgos
+                .FirstOrDefaultAsync(m => m.IdNivelLiderazgo == id);
+            if (nivelesLiderazgo == null)
             {
                 return NotFound();
             }
 
-            return View(evento);
+            return View(nivelesLiderazgo);
         }
 
-        // POST: Eventoes/Delete/5
+        // POST: NivelesLiderazgoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var evento = await _context.Eventos.FindAsync(id);
-            if (evento != null)
+            var nivelesLiderazgo = await _context.NivelesLiderazgos.FindAsync(id);
+            if (nivelesLiderazgo != null)
             {
-                _context.Eventos.Remove(evento);
+                _context.NivelesLiderazgos.Remove(nivelesLiderazgo);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventoExists(int id)
+        private bool NivelesLiderazgoExists(int id)
         {
-            return _context.Eventos.Any(e => e.IdEvento == id);
+            return _context.NivelesLiderazgos.Any(e => e.IdNivelLiderazgo == id);
         }
     }
 }

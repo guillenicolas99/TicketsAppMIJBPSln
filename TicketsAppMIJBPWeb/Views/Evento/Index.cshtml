@@ -1,40 +1,43 @@
 ﻿@model IEnumerable<CapaInfraestructura.CapaDominio.Entities.Evento>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de eventos";
+    int i = 1;
 }
 
-<h1>Index</h1>
+<a class="btn btn-primary my-3" asp-action="Create">Agregar evento nuevo</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 @if(Model.Count() > 0)
 {    
-<table class="table">
+    <table class="table table-dark table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NombreEvento)
+                #
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaEvento)
+                Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CantidadTotalTickets)
+                Fecha
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DescripcionEvento)
+                Total de tickets
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EstadoEventoIdEstadoEventoNavigation)
+                Estado
             </th>
-            <th></th>
+            <th>
+                Acciones
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @i
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NombreEvento)
             </td>
@@ -45,18 +48,16 @@
                 @Html.DisplayFor(modelItem => item.CantidadTotalTickets)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DescripcionEvento)
+                @Html.DisplayFor(modelItem => item.EstadoEventoIdEstadoEventoNavigation.NombreEstadoEvento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EstadoEventoIdEstadoEventoNavigation.DescripcionEstadoEvento)
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.IdEvento">Edit</a> |
+                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdEvento">Details</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdEvento">Delete</a>
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdEvento">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdEvento">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdEvento">Delete</a>
-            </td>
-        </tr>
-}
+                </tr>
+                i++;
+            }
     </tbody>
     </table>
 }

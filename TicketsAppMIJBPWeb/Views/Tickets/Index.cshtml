@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CapaInfraestructura.CapaDominio.Entities.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroTicket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AbonoTicket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioOriginal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescuentoAplicado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDescuento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoriaTicketIdCategoriaTicketNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoTicketIdEstadoTicketNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventoIdEventoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonaIdPersonaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AbonoTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioOriginal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescuentoAplicado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaDescuento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaTicketIdCategoriaTicketNavigation.DescripcionCategoriaTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoTicketIdEstadoTicketNavigation.DescripcionEstadoTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventoIdEventoNavigation.NombreEvento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonaIdPersonaNavigation.NombrePersona)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdTicket">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdTicket">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdTicket">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -10,23 +10,27 @@ public partial class Persona
     [Key]
     public int IdPersona { get; set; }
 
-    public string NombrePersona { get; set; } = null!;
+    [Required(ErrorMessage = "El nombre es requerido"), MinLength(3, ErrorMessage = "El nombre debe contener al menos 3 caracteres")]
+    public string NombrePersona { get; set; }
 
-    public string Email { get; set; } = null!;
+    [Required(ErrorMessage = "El correo es requerido"), MinLength(3, ErrorMessage = "El correo debe contener al menos 3 caracteres")]
+    public string? Email { get; set; }
 
-    public string Telefono { get; set; } = null!;
+    [Required(ErrorMessage = "El Telefono es requerido"), MinLength(8, ErrorMessage = "El Telefono debe contener al menos 8 caracteres")]
+    public string? Telefono { get; set; } = null!;
 
+    [Required(ErrorMessage = "El nivel de liderazgo es requerido")]
     public int NivelLiderazgoIdNivelLiderazgo { get; set; }
 
-    public int RedIdRed { get; set; }
+    public int? RedIdRed { get; set; }
 
     [ForeignKey("NivelLiderazgoIdNivelLiderazgo")]
     [InverseProperty("Personas")]
-    public virtual NivelesLiderazgo NivelLiderazgoIdNivelLiderazgoNavigation { get; set; } = null!;
+    public virtual NivelesLiderazgo? NivelLiderazgoIdNivelLiderazgoNavigation { get; set; }
 
     [ForeignKey("RedIdRed")]
     [InverseProperty("Personas")]
-    public virtual Rede RedIdRedNavigation { get; set; } = null!;
+    public virtual Rede? RedIdRedNavigation { get; set; }
 
     [InverseProperty("PersonaIdPersonaNavigation")]
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();

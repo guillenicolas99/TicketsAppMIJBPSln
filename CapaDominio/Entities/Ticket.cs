@@ -22,27 +22,27 @@ public partial class Ticket
     [Column(TypeName = "datetime")]
     public DateTime? FechaDescuento { get; set; }
 
-    public int EventoIdEvento { get; set; }
+    public int? EventoIdEvento { get; set; }
 
-    public int EstadoTicketIdEstadoTicket { get; set; }
+    public int? EstadoTicketIdEstadoTicket { get; set; }
 
-    public int CategoriaTicketIdCategoriaTicket { get; set; }
+    public int? CategoriaTicketIdCategoriaTicket { get; set; }
 
-    public int PersonaIdPersona { get; set; }
+    public int? PersonaIdPersona { get; set; }
 
     [ForeignKey("CategoriaTicketIdCategoriaTicket")]
     [InverseProperty("Tickets")]
-    public virtual CategoriasTicket CategoriaTicketIdCategoriaTicketNavigation { get; set; } = null!;
+    public virtual CategoriasTicket? CategoriaTicketIdCategoriaTicketNavigation { get; set; }
 
     [ForeignKey("EstadoTicketIdEstadoTicket")]
     [InverseProperty("Tickets")]
-    public virtual EstadosTicket EstadoTicketIdEstadoTicketNavigation { get; set; } = null!;
+    public virtual EstadosTicket? EstadoTicketIdEstadoTicketNavigation { get; set; }
 
     [ForeignKey("EventoIdEvento")]
     [InverseProperty("Tickets")]
-    public virtual Evento EventoIdEventoNavigation { get; set; } = null!;
+    public virtual Evento? EventoIdEventoNavigation { get; set; }
 
     [ForeignKey("PersonaIdPersona")]
     [InverseProperty("Tickets")]
-    public virtual Persona PersonaIdPersonaNavigation { get; set; } = null!;
+    public virtual Persona? PersonaIdPersonaNavigation { get; set; }
 }

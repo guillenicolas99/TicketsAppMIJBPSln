@@ -16,8 +16,10 @@ public partial class Evento
     [Column(TypeName = "datetime")]
     public DateTime FechaEvento { get; set; }
 
+    [Required]
     public int? CantidadTotalTickets { get; set; }
 
+    [Required]
     public string? DescripcionEvento { get; set; }
 
     [Required(ErrorMessage = "El nombre del estado de la ticket es requerida")]

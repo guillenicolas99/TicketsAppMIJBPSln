@@ -41,7 +41,42 @@
             </article>
         </div>
         <div class="col-sm-6">
-            Listado de tickets
+            @if (Model.Tickets.Any())
+            {
+                <h3>Tickets para este evento:</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Número de Ticket</th>
+                            <th>Estado</th>
+                            <th>Abono</th>
+                            <th>Precio Original</th>
+                            <th>Descuento Aplicado</th>
+                            <th>Persona Asignada</th>
+                            <th>Categoría</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ticket in Model.Tickets)
+                        {
+                            <tr>
+                                <td>@ticket.NumeroTicket</td>
+                                <td>@ticket.EstadoTicketIdEstadoTicketNavigation.NombreEstadoTicket</td>
+                                <td>@ticket.AbonoTicket</td>
+                                <td>@ticket.PrecioOriginal</td>
+                                <td>@ticket.DescuentoAplicado ?? 0</td> <!-- Si tiene descuento, mostrarlo -->
+                                <td>@ticket.PersonaIdPersonaNavigation.NombrePersona</td>
+                                <td>@ticket.CategoriaTicketIdCategoriaTicketNavigation.NombreCategoriaTicket</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+            else
+            {
+                <h2>No hay tickets</h2>
+            }
         </div>
     </div>
 </section>

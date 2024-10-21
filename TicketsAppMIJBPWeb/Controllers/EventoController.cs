@@ -36,6 +36,12 @@ namespace TicketsAppMIJBPWeb.Controllers
 
             var evento = await _context.Eventos
                 .Include(e => e.EstadoEventoIdEstadoEventoNavigation)
+                .Include(e => e.Tickets)
+                    .ThenInclude(t => t.EstadoTicketIdEstadoTicketNavigation)
+                .Include(e => e.Tickets)
+                    .ThenInclude(t => t.CategoriaTicketIdCategoriaTicketNavigation)
+                .Include(e => e.Tickets)
+                    .ThenInclude(t => t.PersonaIdPersonaNavigation)
                 .FirstOrDefaultAsync(m => m.IdEvento == id);
             if (evento == null)
             {
